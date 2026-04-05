@@ -1,0 +1,13 @@
+<h1 class="demo"> Line 1 </h1>
+<h1 class="demo"> Line 2 </h1>
+<h1 class="demo"> Line 3 </h1>
+<button onclick="changeDemo()">Change line</button>
+
+<script>
+function changeDemo() {
+  const lines = document.getElementsByClassName("demo");
+  for (let i = 0; i < lines.length; i++) {
+    lines[i].textContent = "Line changed";
+  }
+}
+</script>

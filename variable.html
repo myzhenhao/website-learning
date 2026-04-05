@@ -1,0 +1,28 @@
+<h1 id="demo"> Line 1 </h1>
+<button onclick="sumDemo()">Change sum</button>
+<button onclick="boolDemo()">Change boolean</button>
+<button onclick="stringDemo()">Change string</button>
+<script>
+    function sumDemo() {
+        let x = 10; 
+        let y = 20;
+        let z = x + y;
+        document.getElementById("demo").innerHTML = z;
+        window.alert(z);
+    }
+    function boolDemo() {
+        let x = "XYZ";
+        let y = "ABC";
+        let z = x ?? y;
+        document.getElementById("demo").innerHTML = z;
+        window.alert(z);
+    }
+    function stringDemo() {
+        let x = "XYZ";
+        let y = "ABC";
+        let z = x + y;
+        document.getElementById("demo").innerHTML = z;
+        window.alert(z);
+    }
+
+</script>
