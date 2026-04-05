@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      line-height: 1.5;
+    }
+    h1 {
+      margin-bottom: 12px;
+    }
+    .row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    #itemInput {
+      flex: 1;
+      min-width: 140px;
+      padding: 8px;
+    }
+    #qtyInput {
+      width: 64px;
+      padding: 8px;
+    }
+    button {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 16px;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border: 1px solid #ddd;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      background: #fafafa;
+    }
+    li.got {
+      background: #e8f5e9;
+      border-color: #c8e6c9;
+    }
+    .item-label.got {
+      text-decoration: line-through;
+      color: #666;
+    }
+    .actions {
+      display: flex;
+      gap: 6px;
+    }
+    .hint {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Shopping List</h1>
+
+  <div class="row">
+    <input id="itemInput" type="text" placeholder="Item (e.g. milk)" />
+    <input id="qtyInput" type="number" min="1" value="1" aria-label="Quantity" />
+    <button id="addBtn" type="button">Add</button>
+  </div>
+  <p class="hint">Add items, mark <strong>Got it</strong> when you buy them, or remove from the list.</p>
+
+  <ul id="list"></ul>
+
+  <script>
+    const itemInput = document.getElementById("itemInput");
+    const qtyInput = document.getElementById("qtyInput");
+    const addBtn = document.getElementById("addBtn");
+    const list = document.getElementById("list");
+
+    function addItem() {
+      const name = itemInput.value.trim();
+      let qty = parseInt(qtyInput.value, 10);
+      if (Number.isNaN(qty) || qty < 1) qty = 1;
+
+      if (name === "") {
+        alert("Please enter an item name.");
+        itemInput.focus();
+        return;
+      }
+
+      const li = document.createElement("li");
+
+      const label = document.createElement("span");
+      label.classList.add("item-label");
+      label.textContent = qty > 1 ? `${name} × ${qty}` : name;
+
+      const actions = document.createElement("div");
+      actions.classList.add("actions");
+
+      const gotBtn = document.createElement("button");
+      gotBtn.type = "button";
+      gotBtn.textContent = "Got it";
+      gotBtn.addEventListener("click", () => {
+        label.classList.toggle("got");
+        li.classList.toggle("got");
+      });
+
+      const delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.textContent = "Remove";
+      delBtn.addEventListener("click", () => {
+        li.remove();
+      });
+
+      actions.appendChild(gotBtn);
+      actions.appendChild(delBtn);
+      li.appendChild(label);
+      li.appendChild(actions);
+      list.appendChild(li);
+
+      itemInput.value = "";
+      qtyInput.value = "1";
+      itemInput.focus();
+    }
+
+    addBtn.addEventListener("click", addItem);
+
+    itemInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addItem();
+    });
+    qtyInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addItem();
+    });
+  </script>
+</body>
+</html>
